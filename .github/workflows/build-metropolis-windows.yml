@@ -1,0 +1,38 @@
+name: Build Metropolis Windows
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "metropolis-cpp/**"
+      - ".github/workflows/build-metropolis-windows.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+- name: Configurar CMake
+        run: cmake -S metropolis-cpp -B build -A x64
+
+- name: Compilar Release
+        run: cmake --build build --config Release --parallel
+
+- name: Preparar arquivos
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist
+          Copy-Item build/Release/metropolis-kaykit.exe dist/
+          Copy-Item metropolis-cpp/README.md dist/
+
+- name: Disponibilizar executável
+        uses: actions/upload-artifact@v4
+        with:
+          name: metropolis-kaykit-windows
+          path: dist/
