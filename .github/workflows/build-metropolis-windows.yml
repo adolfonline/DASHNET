@@ -13,8 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-
-steps:
+    steps:
       - name: Baixar código
         uses: actions/checkout@v4
 
