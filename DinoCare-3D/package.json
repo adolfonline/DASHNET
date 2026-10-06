@@ -1,0 +1,42 @@
+{
+  "name": "dinocare-3d",
+  "version": "1.0.0",
+  "description": "DinoCare 3D - bichinho virtual em Three.js",
+  "author": "DIGI TECH",
+  "license": "MIT",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win nsis portable",
+    "build:portable": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "38.0.0",
+    "electron-builder": "26.0.12"
+  },
+  "build": {
+    "appId": "com.digitech.dinocare3d",
+    "productName": "DinoCare 3D",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "directories": { "output": "build" },
+    "files": ["index.html", "main.js", "vendor/**/*", "package.json"],
+    "asar": true,
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DinoCare 3D",
+      "installerLanguages": ["pt_BR"],
+      "language": 1046
+    }
+  }
+}
